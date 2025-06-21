@@ -1,0 +1,29 @@
+<h1>Institutions</h1>
+
+<% if Institution.any?%>
+    <style>
+    table,td,th{
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    </style>
+    <table width = "100%">
+        <tr>
+            <th>Name</th>
+            <th>CNPJ</th>
+            <th>Category</th>
+            <th colspan = "2">Options </th>
+        </tr>
+        <% @Institutions.each do |institution| %>
+        <tr>
+            <td><%=link_to institution.name,institution %></td>
+            <td><%= institution.cnpj %></td>
+            <td><%= institution.university_type %></td>
+            <td><%= link_to "Edit",edit_institution_path(institution) %></td>
+            <td><%= link_to "Delete","universities/#{institution.id}", data: {"turbo-method": :delete,'turbo-confirm': :"Are you sure you want to delete?"} %></td>
+        </tr>
+        <%end%>
+    </table>
+<%end%>

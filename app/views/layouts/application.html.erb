@@ -22,7 +22,38 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
-</html>
+<body>
+  <header>
+    <div class="logo">
+      <%= link_to "Bilinho", root_path %>
+    </div>
+  </header>
+
+  <div class="wrapper">
+    <aside>
+      <nav>
+        <ul>
+          <li><strong><%= link_to "Instituições", institutions_path %></strong></li>  
+          <li><%= link_to "- Novo", new_institution_path %></li>
+          
+          <li><strong><%= link_to "Alunos", students_path %></strong></li>
+          <li><%= link_to "- Novo", new_student_path %></li>
+
+          <li><strong><%= link_to "Matrículas", enrollments_path %></strong></li>
+          <li><%= link_to "- Novo", new_enrollment_path %></li>
+
+          <li><strong><%= link_to "Faturas", invoices_path %></strong></li>
+          <li><%= link_to "- Novo", new_invoice_path %></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main>
+      <%= yield %>
+    </main>
+  </div>
+
+  <footer>
+    <p>@bruno.pelossi</p>
+  </footer>
+</body>

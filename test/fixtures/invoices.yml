@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  invoice_price: 9.99
+  invoice_due_date: 2025-06-21
+  enroolment: one
+  status: MyString
+
+two:
+  invoice_price: 9.99
+  invoice_due_date: 2025-06-21
+  enroolment: two
+  status: MyString

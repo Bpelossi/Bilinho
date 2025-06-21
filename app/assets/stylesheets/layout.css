@@ -1,0 +1,75 @@
+/* layout.scss */
+
+:root{
+    --cor-primaria: #D8EFD3;
+    --cor-secudaria: #55AD9B;
+    --cor-terciaria: #95D2B3;
+    --cor-highlight: #F1F8E8;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--cor-secudaria);
+}
+
+header .logo {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+aside {
+  width: 220px;
+  background-color: var(--cor-terciaria);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+aside nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+aside nav ul li {
+  margin-bottom: 8px;
+}
+
+aside nav ul li + li {
+  margin-top: 15px;
+}
+
+main {
+  background-color: var(--cor-primaria);
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.wrapper {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--cor-secudaria);
+}
