@@ -1,57 +1,74 @@
 /* layout.scss */
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
+
 :root{
-    --cor-primaria: #D8EFD3;
-    --cor-secudaria: #55AD9B;
-    --cor-terciaria: #95D2B3;
-    --cor-highlight: #F1F8E8;
+  --cor-primaria: #D8EFD3;
+  --cor-secudaria: #55AD9B;
+  --cor-terciaria: #95D2B3;
+  --cor-highlight: #F1F8E8;
+  --cor-shadow: #366057;
+  --dark-text: #313639;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    color: inherit;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
+  color: var(--cor-highlight);
 }
 
 header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 10px 20px;
+  height: 8vh;
   background-color: var(--cor-secudaria);
-}
-
-header .logo {
   font-weight: bold;
   font-size: 24px;
 }
 
-header nav ul {
-  list-style: none;
+.sidebar {
   display: flex;
-  gap: 15px;
-  margin: 0;
-  padding: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 250px;
+  height: 100vh;
+  background: var(--cor-terciaria);
 }
 
-aside {
-  width: 220px;
-  background-color: var(--cor-terciaria);
-  padding: 20px;
+.sidebar ul a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  line-height: 65px;
+  font-size: 20px;
+  color: var(--cor-highlight);
+  padding-left: 40px;
   box-sizing: border-box;
+  border-bottom: 1px solid var(--cor-shadow);
+  border-top: 1px solid var(--cor-primaria);
+  transition: .4s;
 }
 
-aside nav ul {
-  list-style: none;
-  padding: 0;
+.sidebar ul li:hover a {
+  padding-left: 50px;
 }
 
-aside nav ul li {
-  margin-bottom: 8px;
+.sidebar ul a.ativo {
+  color: var(--dark-text);
+  font-weight: bold;
 }
 
-aside nav ul li + li {
-  margin-top: 15px;
+.sidebar ul a i {
+  margin-right: 16px;
 }
 
 main {
@@ -59,17 +76,26 @@ main {
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
+  color: var(--dark-text);
 }
 
 .wrapper {
   display: flex;
-  height: calc(100vh - 60px);
+  height: 100vh;
 }
 
 footer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
+  flex-direction: column;
   background-color: var(--cor-secudaria);
+
+}
+footer ul li {
+  color: var(--cor-terciaria);
+  border-bottom: 1px solid --dark-text;
+}
+
+
+footer ul li:hover a {
+  color: var(--cor-terciaria);
 }

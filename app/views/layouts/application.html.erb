@@ -16,6 +16,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <script src="https://kit.fontawesome.com/4386879e19.js" crossorigin="anonymous"></script>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -23,37 +24,50 @@
   </head>
 
 <body>
-  <header>
-    <div class="logo">
-      <%= link_to "Bilinho", root_path %>
-    </div>
-  </header>
-
   <div class="wrapper">
-    <aside>
-      <nav>
+    <div class="sidebar">
+      <ul>
+        <li>
+          <header class="logo">
+            <%= link_to root_path do%>
+              <i class="fa-solid fa-money-bill-1-wave"></i>
+              Bilinho
+            <% end %>
+          </header>
+        </li>
+        <li>
+          <%= link_to institutions_path, class: ("ativo" if current_page?(institutions_path)) do %>
+            <i class="fa-solid fa-building-columns"></i> Institutions
+          <% end %>
+        </li>
+        <li>
+          <%= link_to students_path, class: ("ativo" if current_page?(students_path)) do %>
+            <i class="fa-solid fa-user-graduate"></i> Students
+          <% end %>
+        </li>  
+        <li>
+          <%= link_to enrollments_path, class: ("ativo" if current_page?(enrollments_path)) do %>
+            <i class="fa-solid fa-clipboard-check"></i> Enrollments
+          <% end %>
+        </li>
+        <li>
+          <%= link_to invoices_path, class: ("ativo" if current_page?(invoices_path)) do %>
+            <i class="fa-solid fa-file-invoice-dollar"></i> Invoices
+          <% end %>
+        </li> 
+      </ul>
+      <footer>
         <ul>
-          <li><strong><%= link_to "Instituições", institutions_path %></strong></li>  
-          <li><%= link_to "- Novo", new_institution_path %></li>
-          
-          <li><strong><%= link_to "Alunos", students_path %></strong></li>
-          <li><%= link_to "- Novo", new_student_path %></li>
-
-          <li><strong><%= link_to "Matrículas", enrollments_path %></strong></li>
-          <li><%= link_to "- Novo", new_enrollment_path %></li>
-
-          <li><strong><%= link_to "Faturas", invoices_path %></strong></li>
-          <li><%= link_to "- Novo", new_invoice_path %></li>
+          <li><a href="https://github.com/Bpelossi/Bilinho/blob/main/README.md"><i class="fa-brands fa-readme"></i>Read Me</a></li>
+          <li><a href="https://www.linkedin.com/in/bruno-pelossi-71b690155"><i class="fa-brands fa-linkedin"></i>  Linkedin</a></li>
+          <li><a href="https://github.com/Bpelossi"><i class="fa-brands fa-github"></i>  Github</a></li>
         </ul>
-      </nav>
-    </aside>
+      </footer>
+    </div>
 
     <main>
       <%= yield %>
     </main>
   </div>
 
-  <footer>
-    <p>@bruno.pelossi</p>
-  </footer>
 </body>

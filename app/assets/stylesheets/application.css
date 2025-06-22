@@ -9,5 +9,4 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
- @import "reset";
  @import "layout";
