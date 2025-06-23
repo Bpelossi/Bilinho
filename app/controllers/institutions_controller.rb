@@ -1,7 +1,24 @@
 class InstitutionsController < ApplicationController
   def index
     @institutions = Institution.all
+
+    if params[:id].present?
+      @institutions = @institutions.where("id LIKE ?", "%#{params[:id]}%")
+    end
+
+    if params[:name].present?
+      @institutions = @institutions.where("LOWER(name) LIKE ?", "%#{params[:name].downcase}%")
+    end
+
+    if params[:cnpj].present?
+      @institutions = @institutions.where("cnpj LIKE ?", "%#{params[:cnpj]}%")
+    end
+
+    if params[:institution_type].present?
+      @institutions = @institutions.where(institution_type: params[:institution_type])
+    end
   end
+
 
   def show
     @institution = Institution.find(params[:id])
