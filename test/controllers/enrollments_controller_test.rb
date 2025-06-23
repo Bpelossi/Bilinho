@@ -2,37 +2,45 @@ require "test_helper"
 
 class EnrollmentsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get enrollments_index_url
-    assert_response :success
-  end
-
-  test "should get show" do
-    get enrollments_show_url
+    get enrollments_url
     assert_response :success
   end
 
   test "should get new" do
-    get enrollments_new_url
+    get new_enrollment_url
     assert_response :success
   end
 
-  test "should get create" do
-    get enrollments_create_url
+  test "should show enrollment" do
+    enrollment = enrollments(:one)
+    get enrollment_url(enrollment)
     assert_response :success
   end
 
   test "should get edit" do
-    get enrollments_edit_url
+    enrollment = enrollments(:one)
+    get edit_enrollment_url(enrollment)
     assert_response :success
   end
 
-  test "should get update" do
-    get enrollments_update_url
-    assert_response :success
+  test "should create enrollment" do
+    assert_difference("Enrollment.count") do
+      post enrollments_url, params: { enrollment: { full_price: 100.0, number_of_installments: 5, due_day: 10, course_name: "Curso X", institution_id: institutions(:one).id, student_id: students(:one).id } }
+    end
+    assert_redirected_to enrollment_url(Enrollment.last)
   end
 
-  test "should get destroy" do
-    get enrollments_destroy_url
-    assert_response :success
+  test "should update enrollment" do
+    enrollment = enrollments(:one)
+    patch enrollment_url(enrollment), params: { enrollment: { course_name: "Curso Atualizado" } }
+    assert_redirected_to enrollment_url(enrollment)
+  end
+
+  test "should destroy enrollment" do
+    enrollment = enrollments(:one)
+    assert_difference("Enrollment.count", -1) do
+      delete enrollment_url(enrollment)
+    end
+    assert_redirected_to enrollments_url
   end
 end
