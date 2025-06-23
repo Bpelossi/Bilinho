@@ -3,9 +3,9 @@
 one:
   name: MyString
   cnpj: MyString
-  type: 
+  institution_type: 
 
 two:
   name: MyString
   cnpj: MyString
-  type: 
+  institution_type: 
