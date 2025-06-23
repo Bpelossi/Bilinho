@@ -12,20 +12,4 @@ class Enrollment < ApplicationRecord
   validates :course_name, presence: true
   validates :student, presence: true
   validates :institution, presence: true
-
-  # after_create :generate_invoices
-
-  # private
-
-  # def generate_invoices
-  #   installment_value = (full_price / number_of_installments).round(2)
-
-  #   number_of_installments.times do |i|
-  #     invoices.create!(
-  #       invoice_price: installment_value,
-  #       invoice_due_date: Date.current.next_month(i).change(day: due_day),
-  #       status: :open
-  #     )
-  #   end
-  # end
 end

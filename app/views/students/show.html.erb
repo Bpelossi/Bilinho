@@ -1,2 +1,41 @@
-<h1>Students#show</h1>
-<p>Find me in app/views/students/show.html.erb</p>
+<section>
+    <h1>
+        <%= link_to students_path do%>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
+        Student
+    </h1>
+
+    <% if Student.any? %>
+    <div class="profile">
+    <div class="profile-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Institution Icon" />
+        <h2><%= @student.name %></h2>
+        <p><%= @student.phone %></p>
+        <p><%= @student.cpf%></p>
+
+        <div class="profile-buttons">
+        <%= link_to "Editar", edit_student_path(@student), class: "btn edit" %>
+        <%= link_to "Excluir", student_path(@student),
+                    method: :delete,
+                    data: { turbo_confirm: "Tem certeza que deseja excluir?" },
+                    class: "btn delete" %>
+        </div>
+    </div>
+
+    <div class="profile-right">
+        <h3>Detalhes</h3>
+        <ul>
+        <li><strong>Id:</strong> <%= @student.id%></li>
+        <li><strong>Nome:</strong> <%= @student.name %></li>
+        <li><strong>CPF:</strong> <%= @student.cpf %></li>
+        <li><strong>Data de aniversário:</strong> <%= @student.birthday %></li>
+        <li><strong>Telefone:</strong> <%= @student.phone %></li>
+        <li><strong>Sexo:</strong> <%= @student.gender %></li>
+        <li><strong>Criada em:</strong> <%= l @student.created_at.to_date %></li>
+        <li><strong>Uptade em:</strong> <%= l @student.updated_at.to_date %></li>
+        </ul>
+    </div>
+    </div>
+    <% end %>
+</section>

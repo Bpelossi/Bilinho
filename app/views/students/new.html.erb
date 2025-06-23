@@ -1,2 +1,11 @@
-<h1>Students#new</h1>
-<p>Find me in app/views/students/new.html.erb</p>
+<section>
+    
+    <h1>
+        <%= link_to students_path do%>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
+        Novo Estudante
+    </h1>
+
+    <%= render "student_form" %>
+</section>

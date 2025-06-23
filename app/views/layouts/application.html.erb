@@ -42,6 +42,15 @@
         </li>
       <ul>
       <% end %>
+      <% if controller_name == "students" %>  
+      <ul>
+        <li>
+          <%= link_to new_student_path do %>
+            <i class="fa-solid fa-plus"></i> New Student
+          <% end %>
+        </li>
+      <ul>
+      <% end %>
     </nav>
   </header>
   <div class="wrapper">

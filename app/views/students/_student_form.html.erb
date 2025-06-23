@@ -1,0 +1,46 @@
+<%= form_with(model: @student, local: true) do |form| %>
+  <div class="profile">
+    <div class="profile-right">
+      <ul>
+        <li>
+          <strong><%= form.label :name %></strong> 
+          <%= form.text_field :name %>
+        </li>
+        <li>
+          <strong><%= form.label :cpf %></strong>
+          <%= form.text_field :cpf, maxlength: 11, pattern: '\d{11}', title: "CPF deve conter exatamente 11 números" %>
+        </li>
+        <li>
+          <strong><%= form.label :birthday %></strong>
+          <%= form.date_field :birthday %>
+        </li>
+        <li>
+          <strong><%= form.label :phone %></strong>
+          <%= form.telephone_field :phone %>
+        </li>
+        <li>
+          <strong><%= form.label :gender %></strong>
+          <%= form.select :gender, [["Masculino", "M"], ["Feminino", "F"]] %>
+        </li>
+        <li>
+          <strong><%= form.label :payment_method %></strong>
+          <%= form.select :payment_method, [["Boleto", "boleto"], ["Cartão", "cartão"]] %>
+        </li>
+        <li>
+          <%= form.submit %>
+        </li>  
+      </ul>
+    </div>
+  </div>
+
+  <% if @student.errors.any? %>
+      <div id="error_explanation" style="background: #fdd; border: 1px solid red; padding: 10px; margin-bottom: 20px;">
+          <h2><%= pluralize(@student.errors.count, "erro") %> impediram o salvamento:</h2>
+          <ul>
+          <% @student.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+          <% end %>
+          </ul>
+      </div>
+  <% end %>
+<% end %>
