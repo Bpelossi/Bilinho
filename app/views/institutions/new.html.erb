@@ -1,2 +1,11 @@
-<h1>Institutions#new</h1>
-<p>Find me in app/views/institutions/new.html.erb</p>
+<section>
+    
+    <h1>
+        <%= link_to institutions_path do%>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
+        Nova Instituição
+    </h1>
+
+    <%= render "institution_form" %>
+</section>

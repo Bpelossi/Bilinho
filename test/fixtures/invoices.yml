@@ -3,11 +3,11 @@
 one:
   invoice_price: 9.99
   invoice_due_date: 2025-06-21
-  enroolment: one
-  status: MyString
+  enrollment: one
+  status: open
 
 two:
   invoice_price: 9.99
   invoice_due_date: 2025-06-21
-  enroolment: two
-  status: MyString
+  enrollment: two
+  status: open

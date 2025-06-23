@@ -16,6 +16,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    
     <script src="https://kit.fontawesome.com/4386879e19.js" crossorigin="anonymous"></script>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
@@ -24,34 +25,45 @@
   </head>
 
 <body>
+  <header>
+    <div class=logo>
+      <%= link_to root_path do%>
+        <i class="fa-solid fa-money-bill-1-wave"></i>
+        Bilinho
+     <% end %>
+    </div>
+    <nav>
+      <% if controller_name == "institutions" %>  
+      <ul>
+        <li>
+          <%= link_to new_institution_path do %>
+            <i class="fa-solid fa-plus"></i> New Institution
+          <% end %>
+        </li>
+      <ul>
+      <% end %>
+    </nav>
+  </header>
   <div class="wrapper">
     <div class="sidebar">
       <ul>
         <li>
-          <header class="logo">
-            <%= link_to root_path do%>
-              <i class="fa-solid fa-money-bill-1-wave"></i>
-              Bilinho
-            <% end %>
-          </header>
-        </li>
-        <li>
-          <%= link_to institutions_path, class: ("ativo" if current_page?(institutions_path)) do %>
+          <%= link_to institutions_path, class: ("ativo" if controller_name == "institutions") do %>
             <i class="fa-solid fa-building-columns"></i> Institutions
           <% end %>
         </li>
         <li>
-          <%= link_to students_path, class: ("ativo" if current_page?(students_path)) do %>
+          <%= link_to students_path, class: ("ativo" if controller_name == "students") do %>
             <i class="fa-solid fa-user-graduate"></i> Students
           <% end %>
         </li>  
         <li>
-          <%= link_to enrollments_path, class: ("ativo" if current_page?(enrollments_path)) do %>
+          <%= link_to enrollments_path, class: ("ativo" if controller_name == "enrollments") do %>
             <i class="fa-solid fa-clipboard-check"></i> Enrollments
           <% end %>
         </li>
         <li>
-          <%= link_to invoices_path, class: ("ativo" if current_page?(invoices_path)) do %>
+          <%= link_to invoices_path, class: ("ativo" if controller_name == "invoices") do %>
             <i class="fa-solid fa-file-invoice-dollar"></i> Invoices
           <% end %>
         </li> 

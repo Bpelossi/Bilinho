@@ -1,2 +1,39 @@
-<h1>Institutions#show</h1>
-<p>Find me in app/views/institutions/show.html.erb</p>
+<section>
+    <h1>
+        <%= link_to institutions_path do%>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
+        Instituição
+    </h1>
+
+    <% if Institution.any? %>
+    <div class="profile">
+    <div class="profile-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Institution Icon" />
+        <h2><%= @institution.name %></h2>
+        <p><%= @institution.institution_type.capitalize %></p>
+        <p><%= @institution.cnpj %></p>
+
+        <div class="profile-buttons">
+        <%= link_to "Editar", edit_institution_path(@institution), class: "btn edit" %>
+        <%= link_to "Excluir", institution_path(@institution),
+                    method: :delete,
+                    data: { turbo_confirm: "Tem certeza que deseja excluir?" },
+                    class: "btn delete" %>
+        </div>
+    </div>
+
+    <div class="profile-right">
+        <h3>Detalhes</h3>
+        <ul>
+        <li><strong>Id:</strong> <%= @institution.id%></li>
+        <li><strong>Nome:</strong> <%= @institution.name %></li>
+        <li><strong>CNPJ:</strong> <%= @institution.cnpj %></li>
+        <li><strong>Tipo:</strong> <%= @institution.institution_type.capitalize %></li>
+        <li><strong>Criada em:</strong> <%= l @institution.created_at.to_date %></li>
+        <li><strong>Uptade em:</strong> <%= l @institution.updated_at.to_date %></li>
+        </ul>
+    </div>
+    </div>
+    <% end %>
+</section>

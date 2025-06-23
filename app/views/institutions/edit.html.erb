@@ -1,2 +1,10 @@
-<h1>Institutions#edit</h1>
-<p>Find me in app/views/institutions/edit.html.erb</p>
+<section>
+    <h1>
+        <%= link_to institution_path(@institution) do%>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
+        Editar Instituição
+    </h1>
+    
+    <%= render "institution_form" %>
+</section>

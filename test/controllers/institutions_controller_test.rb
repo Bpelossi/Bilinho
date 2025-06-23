@@ -2,37 +2,45 @@ require "test_helper"
 
 class InstitutionsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get institutions_index_url
-    assert_response :success
-  end
-
-  test "should get show" do
-    get institutions_show_url
+    get institutions_url
     assert_response :success
   end
 
   test "should get new" do
-    get institutions_new_url
+    get new_institution_url
     assert_response :success
   end
 
-  test "should get create" do
-    get institutions_create_url
+  test "should show institution" do
+    institution = institutions(:one)
+    get institution_url(institution)
     assert_response :success
   end
 
   test "should get edit" do
-    get institutions_edit_url
+    institution = institutions(:one)
+    get edit_institution_url(institution)
     assert_response :success
   end
 
-  test "should get update" do
-    get institutions_update_url
-    assert_response :success
+  test "should create institution" do
+    assert_difference("Institution.count") do
+      post institutions_url, params: { institution: { name: "Test", cnpj: "123456", institution_type: "school" } }
+    end
+    assert_redirected_to institution_url(Institution.last)
   end
 
-  test "should get destroy" do
-    get institutions_destroy_url
-    assert_response :success
+  test "should update institution" do
+    institution = institutions(:one)
+    patch institution_url(institution), params: { institution: { name: "Updated Name" } }
+    assert_redirected_to institution_url(institution)
+  end
+
+  test "should destroy institution" do
+    institution = institutions(:one)
+    assert_difference("Institution.count", -1) do
+      delete institution_url(institution)
+    end
+    assert_redirected_to institutions_url
   end
 end
