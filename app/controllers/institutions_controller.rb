@@ -56,6 +56,12 @@ class InstitutionsController < ApplicationController
     redirect_to institutions_path, notice: "Instituição removida!"
   end
 
+  def search
+    query = params[:q].to_s.downcase
+    institutions = Institution.where("lower(name) LIKE ?", "%#{query}%").limit(20).select(:id, :name)
+    render json: institutions
+  end
+
   private
 
   def institution_params

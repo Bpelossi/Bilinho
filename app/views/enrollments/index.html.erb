@@ -1,2 +1,59 @@
-<h1>Enrollments#index</h1>
-<p>Find me in app/views/enrollments/index.html.erb</p>
+<section class="index">
+    <div class="profile">
+        <div class="profile-top">
+        <%= form_with url: enrollments_path, method: :get, local: true,html: { class: "form-busca" } do |form| %>
+            <div>
+                <%= form.label :id, "ID:" %>
+                <%= form.text_field :id, placeholder: "Digite o id" %>
+            </div>
+            <div>
+                <%= form.label :student_id, "Id do estudante:" %>
+                <%= form.text_field :student_id, placeholder: "Id do estudante" %>
+            </div>
+            <div>
+                <%= form.label :institution_id, "Id da Instituição:" %>
+                <%= form.text_field :institution_id, placeholder: "Id da Instituição" %>
+            </div>
+            <div>
+                <%= form.label :course_name, "Nome do curso"%>
+                <%= form.text_field :course_name, placeholder: "Nome do Curso" %>
+            </div>
+            <%= form.submit "Buscar" %>
+
+        <% end %>
+        </div>
+
+        <div class="profile-bottom">
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID Estudante</th>
+                        <th>ID Instituição</th>
+                        <th>Nome do Curso</th>
+                        <th>Preço</th>
+                        <th># Parcelas</th>
+                        <th>Dia vencimento</th>
+                        <th colspan="3">Options</th>
+                    </tr>
+                    <% @enrollments.each do |enrollment| %>
+                    <tr>
+                        <td><%= link_to enrollment.id, enrollment_path(enrollment) %></td>
+                        <td><%= link_to enrollment.student_id, student_path(enrollment.student_id) %></td>
+                        <td><%= link_to enrollment.institution_id, institution_path(enrollment.institution_id) %></td>
+                        <td><%= enrollment.course_name %></td>
+                        <td><%= enrollment.full_price %></td>
+                        <td><%= enrollment.number_of_installments %>
+                        <td><%= enrollment.due_day %>
+                        <td><%= link_to "View", enrollment_path(enrollment), class:"btn" %></td>
+                        <td><%= link_to "Edit", edit_enrollment_path(enrollment), class:"btn" %></td>
+                        <td><%= link_to "Delete", enrollment_path(enrollment), 
+                                class: "btn-danger", 
+                                data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete?" } %></td>                    
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

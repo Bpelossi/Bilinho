@@ -7,7 +7,7 @@ class Enrollment < ApplicationRecord
                           numericality: { greater_than: 0 }
   validates :number_of_installments, presence: true,
                                   numericality: { only_integer: true, greater_than_or_equal_to: 1 }
-  validates :due_date, presence: true,
+  validates :due_day, presence: true,
                        numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31 }
   validates :course_name, presence: true
   validates :student, presence: true

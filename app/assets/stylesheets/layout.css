@@ -315,3 +315,35 @@ th {
   background-color: var(--cor-secudaria);
   color: var(--cor-highlight)
 }
+
+.autocomplete-results {
+  position: absolute;
+  width:300px;
+  top: 100%;
+  left: 120px;
+  background-color: var(--cor-primaria);
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  font-family: 'Roboto', sans-serif;
+  color: var(--dark-text);
+}
+
+.autocomplete-results div {
+  padding: 10px 16px;
+  width: 300px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--cor-terciaria);
+  transition: background-color 0.3s ease;
+}
+
+.autocomplete-results div:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-results div:hover {
+  background-color: var(--cor-secudaria);
+  color: var(--cor-highlight);
+}

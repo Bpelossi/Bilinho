@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   get "home/index"
+  get "/institutions/search", to: "institutions#search"
   resources :institutions
+  get "students/search", to: "students#search"
   resources :students
   resources :enrollments
   resources :invoices
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

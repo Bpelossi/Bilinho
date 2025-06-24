@@ -51,6 +51,15 @@
         </li>
       <ul>
       <% end %>
+      <% if controller_name == "enrollments" %>  
+      <ul>
+        <li>
+          <%= link_to new_enrollment_path do %>
+            <i class="fa-solid fa-plus"></i> New Enrollment
+          <% end %>
+        </li>
+      <ul>
+      <% end %>
     </nav>
   </header>
   <div class="wrapper">
