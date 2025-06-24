@@ -17,6 +17,7 @@
             <div>
                 <%= form.label :gender, "Gender:"%>
                 <%= form.select :gender, options_for_select(["M", "F"], params[:gender]), include_blank: "Todos" %>
+            </div>
             <%= form.submit "Buscar" %>
 
         <% end %>

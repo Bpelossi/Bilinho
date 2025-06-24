@@ -1,2 +1,10 @@
-<h1>Enrollments#edit</h1>
-<p>Find me in app/views/enrollments/edit.html.erb</p>
+<section>
+    <h1>
+        <%= link_to enrollments_path do%>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
+        Editar Matrícula
+    </h1>
+
+    <%= render "enrollment_form" %>
+</section>

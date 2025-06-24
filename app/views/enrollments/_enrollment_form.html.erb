@@ -1,0 +1,51 @@
+<%= form_with(model: @enrollment, local: true) do |form| %>
+  <div class="profile">
+    <div class="profile-right">
+      <ul>
+        <li data-controller="autocomplete" style="position: relative;">
+            <strong><%= form.label :student_name, "Estudante" %></strong>
+            <input type="text" data-autocomplete-target="input" data-action="input->autocomplete#search" autocomplete="off" />
+            <div data-autocomplete-target="results" class="autocomplete-results"></div>
+
+            <%= form.hidden_field :student_id %>
+        </li>
+        <li data-controller="autocomplete" style="position: relative;">
+            <strong><%= form.label :institution_name, "Instituição" %></strong>
+            <input type="text" data-autocomplete-target="input" data-autocomplete-type="institutions" data-action="input->autocomplete#search" autocomplete="off" />
+            <div data-autocomplete-target="results" class="autocomplete-results"></div>
+            <%= form.hidden_field :institution_id %>
+        </li>
+        <li>
+          <strong><%= form.label :course_name %></strong> 
+          <%= form.text_field :course_name %>
+        </li>
+        <li>
+          <strong><%= form.label :full_price %></strong>
+          <%= form.number_field :full_price, step: 0.01, min: 0, placeholder: "Ex: 1499.99" %>
+        </li>
+        <li>
+          <strong><%= form.label :due_day %></strong>
+          <%= form.number_field :due_day, in: 1..31 %>
+        </li>
+        <li>
+          <strong><%= form.label :number_of_installments %></strong>
+          <%= form.number_field :number_of_installments, min: 1 %>
+        </li>
+        <li>
+          <%= form.submit %>
+        </li>  
+      </ul>
+    </div>
+  </div>
+
+  <% if @enrollment.errors.any? %>
+      <div id="error_explanation" style="background: #fdd; border: 1px solid red; padding: 10px; margin-bottom: 20px;">
+          <h2><%= pluralize(@enrollment.errors.count, "erro") %> impediram o salvamento:</h2>
+          <ul>
+          <% @enrollment.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+          <% end %>
+          </ul>
+      </div>
+  <% end %>
+<% end %>

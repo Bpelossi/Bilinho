@@ -52,7 +52,13 @@ class StudentsController < ApplicationController
   def destroy
     @student = Student.find(params[:id])
     @student.destroy
-    redirect_to student_path, notice: "Estudante removido!"
+    redirect_to studen_path, notice: "Estudante removido!"
+  end
+
+  def search
+    query = params[:q].to_s.downcase
+    students = Student.where("lower(name) LIKE ?", "%#{query}%").limit(20).select(:id, :name)
+    render json: students
   end
 
   private

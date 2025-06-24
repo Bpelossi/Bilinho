@@ -1,2 +1,10 @@
-<h1>Enrollments#new</h1>
-<p>Find me in app/views/enrollments/new.html.erb</p>
+<section>
+    <h1>
+        <%= link_to enrollments_path do%>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
+        Nova Matrícula
+    </h1>
+
+    <%= render "enrollment_form" %>
+</section>
