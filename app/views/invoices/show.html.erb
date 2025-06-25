@@ -1,2 +1,40 @@
-<h1>Invoices#show</h1>
-<p>Find me in app/views/invoices/show.html.erb</p>
+<section>
+    <h1>
+        <%= link_to invoices_path do%>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
+        Invoices
+    </h1>
+
+    <% if Invoice.any? %>
+    <div class="profile">
+    <div class="profile-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Institution Icon" />
+        <h2><%= @invoice.id %></h2>
+        <p>R$ <%=  @invoice.invoice_price %></p>
+        <p><%= @invoice.invoice_due_date %></p>
+
+        <div class="profile-buttons">
+        <%= link_to "Editar", edit_invoice_path(@invoice), class: "btn edit" %>
+        <%= link_to "Excluir", invoice_path(@invoice),
+                    method: :delete,
+                    data: { turbo_confirm: "Tem certeza que deseja excluir?" },
+                    class: "btn delete" %>
+        </div>
+    </div>
+
+    <div class="profile-right">
+        <h3>Detalhes</h3>
+        <ul>
+        <li><strong>Id:</strong> <%= @invoice.id%></li>
+        <li><strong>Valor:</strong>R$ <%= @invoice.invoice_price %></li>
+        <li><strong>Data de vencimento:</strong> <%= @invoice.invoice_due_date %></li>
+        <li><strong>Enrollment:</strong> <%= @invoice.enrollment_id %></li>
+        <li><Strong>Status:</strong><%= @invoice.status.capitalize %></li>
+        <li><strong>Criada em:</strong> <%= l @invoice.created_at.to_date %></li>
+        <li><strong>Uptade em:</strong> <%= l @invoice.updated_at.to_date %></li>
+        </ul>
+    </div>
+    </div>
+    <% end %>
+</section>

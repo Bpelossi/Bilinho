@@ -21,6 +21,7 @@ class EnrollmentsController < ApplicationController
 
   def show
     @enrollment = Enrollment.find(params[:id])
+    @invoices = @enrollment.invoices.order(:invoice_due_date)
   end
 
   def new

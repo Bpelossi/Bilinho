@@ -8,35 +8,59 @@
 
     <% if Enrollment.any? %>
     <div class="profile">
-    <div class="profile-left">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Institution Icon" />
-        <h2><%= @enrollment.id %></h2>
-        <p><%= @enrollment.student_id %></p>
-        <p><%= @enrollment.institution_id %></p>
+        <div class="profile-left">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Institution Icon" />
+            <h2><%= @enrollment.student.name %></h2>
+            <p><%= @enrollment.institution.name %></p>
+            <p><%= @enrollment.course_name %></p>
 
-        <div class="profile-buttons">
-        <%= link_to "Editar", edit_enrollment_path(@enrollment), class: "btn edit" %>
-        <%= link_to "Excluir", enrollment_path(@enrollment),
-                    method: :delete,
-                    data: { turbo_confirm: "Tem certeza que deseja excluir?" },
-                    class: "btn delete" %>
+            <div class="profile-buttons">
+            <%= link_to "Editar", edit_enrollment_path(@enrollment), class: "btn edit" %>
+            <%= link_to "Excluir", enrollment_path(@enrollment),
+                        method: :delete,
+                        data: { turbo_confirm: "Tem certeza que deseja excluir?" },
+                        class: "btn delete" %>
+            </div>
         </div>
-    </div>
 
-    <div class="profile-right">
-        <h3>Detalhes</h3>
-        <ul>
-        <li><strong>Id:</strong> <%= @enrollment.id%></li>
-        <li><strong>Id do Estudante:</strong> <%= @enrollment.student_id %></li>
-        <li><strong>Id da Instituição:</strong> <%= @enrollment.institution_id %></li>
-        <li><strong>Nome do curso:</strong> <%= @enrollment.course_name %></li>
-        <li><strong>Preço:</strong> <%= @enrollment.full_price %></li>
-        <li><strong>Dia de vencimento:</strong> <%= @enrollment.due_day %></li>
-        <li><strong>Número de parcelas:</strong> <%= @enrollment.number_of_installments %></li>
-        <li><strong>Criada em:</strong> <%= l @enrollment.created_at.to_date %></li>
-        <li><strong>Uptade em:</strong> <%= l @enrollment.updated_at.to_date %></li>
-        </ul>
-    </div>
+        <div class="profile-right">
+            <h3>Detalhes</h3>
+            <ul>
+            <li><strong>Id:</strong> <%= @enrollment.id%></li>
+            <li><strong>Id do Estudante:</strong> <%= @enrollment.student_id %></li>
+            <li><strong>Id da Instituição:</strong> <%= @enrollment.institution_id %></li>
+            <li><strong>Nome do curso:</strong> <%= @enrollment.course_name %></li>
+            <li><strong>Preço:</strong> <%= @enrollment.full_price %></li>
+            <li><strong>Dia de vencimento:</strong> <%= @enrollment.due_day %></li>
+            <li><strong>Número de parcelas:</strong> <%= @enrollment.number_of_installments %></li>
+            <li><strong>Criada em:</strong> <%= l @enrollment.created_at.to_date %></li>
+            <li><strong>Uptade em:</strong> <%= l @enrollment.updated_at.to_date %></li>
+            </ul>
+        </div>
+
+        <div class="profile-right">
+            <h3>Invoices </h3>
+            <table width="100%">
+                <thead>
+                    <tr>
+                    <th>#</th>
+                    <th>Valor</th>
+                    <th>Vencimento</th>
+                    <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @invoices.each_with_index do |invoice, index| %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= number_to_currency(invoice.invoice_price) %></td>
+                        <td><%= invoice.invoice_due_date.strftime("%d/%m/%Y") %></td>
+                        <td><%= invoice.status.capitalize %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+                </table>
+        </div>
     </div>
     <% end %>
 </section>
