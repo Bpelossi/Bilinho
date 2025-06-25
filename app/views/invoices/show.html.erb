@@ -10,12 +10,11 @@
     <div class="profile">
     <div class="profile-left">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Institution Icon" />
-        <h2><%= @invoice.id %></h2>
-        <p>R$ <%=  @invoice.invoice_price %></p>
-        <p><%= @invoice.invoice_due_date %></p>
+        <h2><%= @invoice.enrollment.student.name %></h2>
+        <p><%=  @invoice.enrollment.institution.name %></p>
+        <p>Parcela: <%= @parcel_number %> / <%= @total_parcels %></p>
 
         <div class="profile-buttons">
-        <%= link_to "Editar", edit_invoice_path(@invoice), class: "btn edit" %>
         <%= link_to "Excluir", invoice_path(@invoice),
                     method: :delete,
                     data: { turbo_confirm: "Tem certeza que deseja excluir?" },
