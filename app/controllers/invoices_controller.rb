@@ -22,6 +22,9 @@ class InvoicesController < ApplicationController
 
   def show
     @invoice = Invoice.find(params[:id])
+    @enrollment = @invoice.enrollment
+    @parcel_number = @enrollment.invoices.order(:invoice_due_date).pluck(:id).index(@invoice.id) + 1
+    @total_parcels = @enrollment.number_of_installments
   end
 
   def update
