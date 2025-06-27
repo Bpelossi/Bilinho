@@ -8,7 +8,7 @@
 
     <% if Invoice.any? %>
     <div class="profile">
-    <div class="profile-left">
+    <div class="profile-left <%= @invoice.status == 'disabled' ? 'disabled-status' : '' %>">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Institution Icon" />
         <h2><%= @invoice.enrollment.student.name %></h2>
         <p><%=  @invoice.enrollment.institution.name %></p>
@@ -22,16 +22,16 @@
         </div>
     </div>
 
-    <div class="profile-right">
+    <div class="profile-right <%= @invoice.status == 'disabled' ? 'disabled-status' : '' %>">
         <h3>Detalhes</h3>
         <ul>
         <li><strong>Id:</strong> <%= @invoice.id%></li>
         <li><strong>Valor:</strong>R$ <%= @invoice.invoice_price %></li>
         <li><strong>Data de vencimento:</strong> <%= @invoice.invoice_due_date %></li>
         <li><strong>Enrollment:</strong> <%= @invoice.enrollment_id %></li>
-        <li><Strong>Status:</strong><%= @invoice.status.capitalize %></li>
         <li><strong>Criada em:</strong> <%= l @invoice.created_at.to_date %></li>
         <li><strong>Uptade em:</strong> <%= l @invoice.updated_at.to_date %></li>
+        <li><Strong>Status:</strong><%= @invoice.status.capitalize %></li>
         </ul>
     </div>
     </div>

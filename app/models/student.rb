@@ -9,4 +9,12 @@ class Student < ApplicationRecord
                   length: { is: 11 }
   validates :gender, presence: true, inclusion: { in: %w[M F] }
   validates :payment_method, presence: true, inclusion: { in: %w[boleto cartão] }
+  validates :status, presence: true, inclusion: { in: %w[enabled disabled] }
+  validate :immutable_fields_after_creation, on: :update
+
+  def immutable_fields_after_creation
+    if cpf_changed?
+      errors.add(:cpf, "não pode ser alterado após a criação")
+    end
+  end
 end

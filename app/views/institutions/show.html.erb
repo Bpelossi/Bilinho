@@ -8,7 +8,7 @@
 
     <% if Institution.any? %>
     <div class="profile">
-    <div class="profile-left">
+    <div class="profile-left <%= @institution.status == 'disabled' ? 'disabled-status' : '' %>">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Institution Icon" />
         <h2><%= @institution.name %></h2>
         <p><%= @institution.institution_type.capitalize %></p>
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="profile-right">
+    <div class="profile-right <%= @institution.status == 'disabled' ? 'disabled-status' : '' %>">
         <h3>Detalhes</h3>
         <ul>
         <li><strong>Id:</strong> <%= @institution.id%></li>
@@ -32,6 +32,7 @@
         <li><strong>Tipo:</strong> <%= @institution.institution_type.capitalize %></li>
         <li><strong>Criada em:</strong> <%= l @institution.created_at.to_date %></li>
         <li><strong>Uptade em:</strong> <%= l @institution.updated_at.to_date %></li>
+        <li><strong>Status:</strong> <%= @institution.status.capitalize %>
         </ul>
     </div>
     </div>

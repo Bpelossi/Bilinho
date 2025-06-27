@@ -17,6 +17,14 @@ class EnrollmentsController < ApplicationController
     if params[:course_name].present?
       @enrollments = @enrollments.where("LOWER(course_name) LIKE ?", "%#{params[:course_name].downcase}")
     end
+
+    if params[:status].present? && params[:status] == "disabled"
+      @enrollments = @enrollments.where(status: params[:status])
+    elsif params[:status].present? && params[:status] == "enabled" || !params[:status].present?
+      @enrollments = @enrollments.where(status: "enabled")
+    else
+      @enrollments
+    end
   end
 
   def show
@@ -52,8 +60,12 @@ class EnrollmentsController < ApplicationController
 
   def destroy
     @enrollment = Enrollment.find(params[:id])
-    @enrollment.destroy
-    redirect_to enrollment_path, notice: "Matrícula removido!"
+    if @enrollment.update(status: "disabled")
+      @enrollment.invoices.where(status: "open").update_all(status: "disabled")
+      redirect_to @enrollment, notice: "Matrícula atualizada com sucesso!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private

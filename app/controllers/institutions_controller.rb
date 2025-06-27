@@ -17,6 +17,14 @@ class InstitutionsController < ApplicationController
     if params[:institution_type].present?
       @institutions = @institutions.where(institution_type: params[:institution_type])
     end
+
+    if params[:status].present? && params[:status] == "disabled"
+      @institutions = @institutions.where(status: params[:status])
+    elsif params[:status].present? && params[:status] == "enabled" || !params[:status].present?
+      @institutions = @institutions.where(status: "enabled")
+    else
+      @institutions
+    end
   end
 
 
@@ -29,7 +37,7 @@ class InstitutionsController < ApplicationController
   end
 
   def create
-    @institution = Institution.new(institution_params)
+    @institution = Institution.new(institution_params.merge(status: "enabled"))
     if @institution.save
       redirect_to @institution, notice: "Instituição criada com sucesso!"
     else
@@ -52,8 +60,11 @@ class InstitutionsController < ApplicationController
 
   def destroy
     @institution = Institution.find(params[:id])
-    @institution.destroy
-    redirect_to institutions_path, notice: "Instituição removida!"
+    if @institution.update(status: "disabled")
+      redirect_to @institution, notice: "Instituição atualizada com sucesso!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def search
