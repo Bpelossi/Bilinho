@@ -8,7 +8,7 @@
 
     <% if Student.any? %>
     <div class="profile">
-    <div class="profile-left">
+    <div class="profile-left <%= @student.status == 'disabled' ? 'disabled-status' : ''%>">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Institution Icon" />
         <h2><%= @student.name %></h2>
         <p><%= @student.phone %></p>
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="profile-right">
+    <div class="profile-right <%= @student.status == 'disabled' ? 'disabled-status' : ''%>">
         <h3>Detalhes</h3>
         <ul>
         <li><strong>Id:</strong> <%= @student.id%></li>
@@ -34,6 +34,7 @@
         <li><strong>Sexo:</strong> <%= @student.gender %></li>
         <li><strong>Criada em:</strong> <%= l @student.created_at.to_date %></li>
         <li><strong>Uptade em:</strong> <%= l @student.updated_at.to_date %></li>
+        <li><Strong>Status:</strong> <%= @student.status.capitalize %></li>
         </ul>
     </div>
     </div>

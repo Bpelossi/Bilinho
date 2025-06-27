@@ -17,6 +17,14 @@ class StudentsController < ApplicationController
     if params[:gender].present?
       @students = @students.where(gender: params[:gender])
     end
+
+    if params[:status].present? && params[:status] == "disabled"
+      @students = @students.where(status: params[:status])
+    elsif params[:status].present? && params[:status] == "enabled" || !params[:status].present?
+      @students = @students.where(status: "enabled")
+    else
+      @students
+    end
   end
 
   def show
@@ -28,7 +36,7 @@ class StudentsController < ApplicationController
   end
 
   def create
-    @student = Student.new(student_params)
+    @student = Student.new(student_params.merge(status: "enabled"))
     if @student.save
       redirect_to @student, notice: "Instituição criada com sucesso!"
     else
@@ -51,8 +59,11 @@ class StudentsController < ApplicationController
 
   def destroy
     @student = Student.find(params[:id])
-    @student.destroy
-    redirect_to studen_path, notice: "Estudante removido!"
+    if @student.update(status: "disabled")
+      redirect_to @student, notice: "Instituição atualizada com sucesso!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def search

@@ -12,10 +12,21 @@ class Enrollment < ApplicationRecord
   validates :course_name, presence: true
   validates :student, presence: true
   validates :institution, presence: true
+  validates :status, presence: true, inclusion: { in: %w[enabled disabled] }
+  validate :institution_must_be_active
 
   after_create :generate_invoices
 
   private
+
+  def institution_must_be_active
+    if institution.status == "disabled"
+      errors.add("Instituição está desativada e não pode aceitar novas matrículas.")
+    end
+    if student.status == "disabled"
+      errors.add("Aluno está desativado e não pode aceitar novas matrículas.")
+    end
+  end
 
   def generate_invoices
     self.number_of_installments.times do |i|

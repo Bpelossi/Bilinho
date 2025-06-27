@@ -18,6 +18,10 @@
                 <%= form.label :course_name, "Nome do curso"%>
                 <%= form.text_field :course_name, placeholder: "Nome do Curso" %>
             </div>
+            <div>
+                <%= form.label :status, "Status:" %>
+                <%= form.select :status, options_for_select(["enabled", "disabled", "todos"], params[:status]) %>
+            </div>
             <%= form.submit "Buscar" %>
 
         <% end %>
@@ -34,6 +38,7 @@
                         <th>Preço</th>
                         <th># Parcelas</th>
                         <th>Dia vencimento</th>
+                        <th>Status</th>
                         <th colspan="3">Options</th>
                     </tr>
                     <% @enrollments.each do |enrollment| %>
@@ -44,7 +49,8 @@
                         <td><%= enrollment.course_name %></td>
                         <td><%= enrollment.full_price %></td>
                         <td><%= enrollment.number_of_installments %>
-                        <td><%= enrollment.due_day %>
+                        <td><%= enrollment.due_day %></td>
+                        <td><%= enrollment.status.capitalize %></td>
                         <td><%= link_to "View", enrollment_path(enrollment), class:"btn" %></td>
                         <td><%= link_to "Edit", edit_enrollment_path(enrollment), class:"btn" %></td>
                         <td><%= link_to "Delete", enrollment_path(enrollment), 
