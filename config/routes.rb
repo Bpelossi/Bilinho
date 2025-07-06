@@ -7,7 +7,16 @@ Rails.application.routes.draw do
   resources :enrollments
   resources :invoices
 
-
+  # API JSON namespace
+  namespace :api do
+    namespace :v1 do
+      resources :institutions, defaults: { format: :json }
+      resources :students, defaults: { format: :json }
+      resources :enrollments, defaults: { format: :json }
+      resources :invoices, defaults: { format: :json }
+    end
+  end
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

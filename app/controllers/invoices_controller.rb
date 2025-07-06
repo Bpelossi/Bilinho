@@ -1,4 +1,6 @@
 class InvoicesController < ApplicationController
+  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
+
   def index
     @invoices = Invoice.all
 
@@ -17,6 +19,11 @@ class InvoicesController < ApplicationController
     if params[:status].present?
       @invoices = @invoices.where(status: params[:status])
     end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @invoices }
+    end
   end
 
 
@@ -25,23 +32,47 @@ class InvoicesController < ApplicationController
     @enrollment = @invoice.enrollment
     @parcel_number = @enrollment.invoices.order(:invoice_due_date).pluck(:id).index(@invoice.id) + 1
     @total_parcels = @enrollment.number_of_installments
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {
+          invoice: @invoice,
+          enrollment: @enrollment,
+          parcel_number: @parcel_number,
+          total_parcels: @total_parcels
+        }
+      end
+    end
   end
 
   def update
     @invoice = Invoice.find(params[:id])
     if @invoice.update(invoice_params)
-      redirect_to @invoice, notice: "Instituição atualizada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to @invoice, notice: "Fatura atualizada com sucesso!" }
+        format.json { render json: @invoice }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: { errors: @invoice.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
     @invoice = Invoice.find(params[:id])
     if @invoice.update(status: "disabled")
-      redirect_to @invoice, notice: "Instituição desabilitada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to @invoice, notice: "Fatura desabilitada com sucesso!" }
+        format.json { render json: { message: "Invoice desativado com sucesso." }, status: :ok }
+      end 
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: { errors: @invoice.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 

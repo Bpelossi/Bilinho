@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_27_163201) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_02_190601) do
   create_table "enrollments", force: :cascade do |t|
     t.decimal "full_price"
     t.integer "number_of_installments"
@@ -48,7 +48,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_163201) do
     t.string "name"
     t.string "cpf"
     t.date "birthday"
-    t.integer "phone"
+    t.string "phone"
     t.string "gender"
     t.string "payment_method"
     t.datetime "created_at", null: false
