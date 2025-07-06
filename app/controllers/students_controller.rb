@@ -1,4 +1,7 @@
 class StudentsController < ApplicationController
+  before_action :set_student, only: %i[show edit update destroy]
+  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
+
   def index
     @students = Student.all
 
@@ -25,10 +28,18 @@ class StudentsController < ApplicationController
     else
       @students
     end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @students }
+    end
   end
 
   def show
-    @student = Student.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: @student }
+    end
   end
 
   def new
@@ -38,31 +49,47 @@ class StudentsController < ApplicationController
   def create
     @student = Student.new(student_params.merge(status: "enabled"))
     if @student.save
-      redirect_to @student, notice: "Instituição criada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to @student, notice: "Aluno criado com sucesso!" }
+        format.json { render json: @student, status: :created }
+      end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @student.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
-  def edit
-    @student = Student.find(params[:id])
-  end
+  def edit;  end
 
   def update
     @student = Student.find(params[:id])
     if @student.update(student_params)
-      redirect_to @student, notice: "Instituição atualizada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to @student, notice: "Aluno atualizado com sucesso!" }
+        format.json { render json: @student }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @student.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
     @student = Student.find(params[:id])
     if @student.update(status: "disabled")
-      redirect_to @student, notice: "Instituição atualizada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to students_path, notice: "Aluno desativado com sucesso!" }
+        format.json { render json: { message: "Aluno desativado com sucesso." }, status: :ok }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { redirect_to @student, alert: "Não foi possível desativar o aluno." }
+        format.json { render json: @student.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -73,6 +100,10 @@ class StudentsController < ApplicationController
   end
 
   private
+
+  def set_student
+    @student = Student.find(params[:id])
+  end
 
   def student_params
     params.require(:student).permit(:name, :cpf, :birthday, :phone, :gender, :payment_method)

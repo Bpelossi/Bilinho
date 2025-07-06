@@ -1,4 +1,5 @@
 class InstitutionsController < ApplicationController
+  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
   def index
     @institutions = Institution.all
 
@@ -25,11 +26,21 @@ class InstitutionsController < ApplicationController
     else
       @institutions
     end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @institutions }
+    end
   end
 
 
   def show
     @institution = Institution.find(params[:id])
+    
+    respond_to do |format|
+      format.html
+      format.json { render json: @institution }
+    end
   end
 
   def new
@@ -39,9 +50,15 @@ class InstitutionsController < ApplicationController
   def create
     @institution = Institution.new(institution_params.merge(status: "enabled"))
     if @institution.save
-      redirect_to @institution, notice: "Instituição criada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to @institution, notice: "Instituição criada com sucesso!" }
+        format.json { render json: @institution, status: :created }
+      end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { errors: @institution.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -52,18 +69,30 @@ class InstitutionsController < ApplicationController
   def update
     @institution = Institution.find(params[:id])
     if @institution.update(institution_params)
-      redirect_to @institution, notice: "Instituição atualizada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to @institution, notice: "Instituição atualizada com sucesso!" }
+        format.json { render json: @institution }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: { errors: @institution.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
     @institution = Institution.find(params[:id])
     if @institution.update(status: "disabled")
-      redirect_to @institution, notice: "Instituição atualizada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to @institution, notice: "Instituição atualizada com sucesso!" }
+        format.json { render json: { message: "Instituição desativado com sucesso." }, status: :ok }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: { errors: @institution.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 

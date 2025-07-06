@@ -1,4 +1,6 @@
 class EnrollmentsController < ApplicationController
+  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
+
   def index
     @enrollments = Enrollment.all
 
@@ -25,11 +27,21 @@ class EnrollmentsController < ApplicationController
     else
       @enrollments
     end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @enrollments }
+    end
   end
 
   def show
     @enrollment = Enrollment.find(params[:id])
     @invoices = @enrollment.invoices.order(:invoice_due_date)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: { enrollment: @enrollment, invoices: @invoices } }
+    end    
   end
 
   def new
@@ -39,9 +51,15 @@ class EnrollmentsController < ApplicationController
   def create
     @enrollment = Enrollment.new(enrollment_params)
     if @enrollment.save
-      redirect_to @enrollment, notice: "Matrícula criada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to @enrollment, notice: "Matrícula criada com sucesso!" }
+        format.json { render json: @enrollment, status: :created }
+      end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { errors: @enrollment.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -51,10 +69,16 @@ class EnrollmentsController < ApplicationController
 
   def update
     @enrollment = Enrollment.find(params[:id])
-    if @enrollment.update(student_params)
-      redirect_to @enrollment, notice: "Matrícula atualizada com sucesso!"
+    if @enrollment.update(enrollment_params)
+      respond_to do |format|
+        format.html { redirect_to @enrollment, notice: "Matrícula atualizada com sucesso!" }
+        format.json { render json: @enrollment }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: { errors: @enrollment.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -62,9 +86,15 @@ class EnrollmentsController < ApplicationController
     @enrollment = Enrollment.find(params[:id])
     if @enrollment.update(status: "disabled")
       @enrollment.invoices.where(status: "open").update_all(status: "disabled")
-      redirect_to @enrollment, notice: "Matrícula atualizada com sucesso!"
+      respond_to do |format|
+        format.html { redirect_to @enrollment, notice: "Matrícula desativada com sucesso!" }
+        format.json { render json: { message: "Matrícula desativado com sucesso." }, status: :ok }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: { errors: @enrollment.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
