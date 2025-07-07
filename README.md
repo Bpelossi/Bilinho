@@ -38,7 +38,7 @@ A API estará disponível em http://localhost:3000.
 
 ## Estrutura de Entidades 🗂️
 
-Institution
+### Institution
 
 | Valor | Descrição | Entrada |
 |-------|-----------|---------|
@@ -47,7 +47,7 @@ Institution
 | institution_type | Tipo de instituição | universidade / escola / creche |
 | status | Situação ativa da Instituição | enabled / disabled|
 
-Student
+### Student
 
 | Valor | Descrição | Entrada |
 |-------|-----------|---------|
@@ -59,9 +59,9 @@ Student
 | payment_method | Método de pagamento do Aluno | boleto / cartao |
 | stauts | Situação ativa do Aluno | enabled / disabled |
 
-Enrollment
+### Enrollment
 
--Vincula a um aluno e a uma instituição.
+- Vincula a um aluno e a uma instituição.
 
 | Valor | Descrição | Entrada |
 |-------|-----------|---------|
@@ -73,7 +73,7 @@ Enrollment
 | student_id | Id do Aluno | FK |
 | status | Situação ativa da matrícula | enabled / disabled |
 
-Invoice
+### Invoice
 
 | Valor | Descrição | Entrada |
 |-------|-----------|---------|
@@ -83,11 +83,11 @@ Invoice
 | status | Situação ativa da parcela | open / late / paid / disabled |
 
 ## Rotas Principais 🌐
-GET /institutions
-POST /institutions
-GET /students
-POST /students
-POST /enrollments
-GET /invoices
+* GET /institutions
+* POST /institutions
+* GET /students
+* POST /students
+* POST /enrollments
+* GET /invoices
 
 (Ver detalhes de parâmetros e respostas em routes.rb ou via rails routes.)
